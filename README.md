@@ -10,9 +10,6 @@ An end-to-end job discovery platform that leverages **Cohere embeddings** to mat
 - **Frontend (Firebase Hosting):** [https://ai-powered-job-match-platform.web.app](https://ai-powered-job-match-platform.web.app)
 - **Backend API (Render):** [https://ai-powered-job-match.onrender.com](https://ai-powered-job-match.onrender.com)
 
-> ⚠️ Note: Render backend may take up to **50 seconds** to wake from standby.
-
-- **GitHub Repository:** [https://github.com/Ash0508/AI-Powered-Job-Match](https://github.com/Ash0508/AI-Powered-Job-Match)
 
 ---
 
@@ -177,7 +174,4 @@ ai-job-match/
 
 ---
 
-## 👨‍💻 Author
 
-Built by [Ankush Singh](https://github.com/Ash0508) as part of the AI job matching challenge.
-"# ai-job-matcher" 
