@@ -43,8 +43,8 @@ export default function Register() {
   setError('');
 
   try {
-    await axios.post('https://ai-powered-job-match.onrender.com/api/users/register', formData, {
-      withCredentials: true,
+    await axios.post('http://localhost:5001/api/users/register', formData, {
+      withCredentials: true, } , { headers: { 'Content-Type': 'application/json' }
     });
 
     alert('✅ Registration successful! Please login.');

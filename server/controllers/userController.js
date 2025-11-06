@@ -16,6 +16,7 @@ export const registerUser = async (req, res) => {
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   const { username, email, password, location, experience, skills, jobType } = req.body;
+  console.log(req.body);
 
   try {
     const userExists = await User.findOne({ email });

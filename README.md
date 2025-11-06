@@ -8,7 +8,7 @@ An end-to-end job discovery platform that leverages **Cohere embeddings** to mat
 ## 🔗 Live Links
 
 - **Frontend (Firebase Hosting):** https://ai-job-matcher-psi.vercel.app/
-- **Backend API (Render):** [https://ai-powered-job-match.onrender.com](https://ai-powered-job-match.onrender.com)
+- **Backend API (Render):** [http://localhost:5000](http://localhost:5000)
 
 
 ---

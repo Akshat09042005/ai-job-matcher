@@ -14,7 +14,7 @@ export default function Jobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('https://ai-powered-job-match.onrender.com/api/jobs');
+        const res = await axios.get('http://localhost:5000/api/jobs');
         setJobs(res.data);
       } catch (err) {
         setError('❌ Failed to fetch jobs.');
@@ -30,7 +30,7 @@ export default function Jobs() {
     setRecommending(true);
     try {
       const res = await axios.post(
-        'https://ai-powered-job-match.onrender.com/api/jobs/recommend',
+        'http://localhost:5000/api/jobs/recommend',
         {
           name: user.username,
           experience: user.experience,

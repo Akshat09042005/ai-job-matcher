@@ -9,11 +9,18 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // common axios config for requests that require cookies
+  const axiosConfig = {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  };
+
   const validateToken = async () => {
     try {
-      const res = await axios.get('https://ai-powered-job-match.onrender.com/api/users/validateToken', {
-        withCredentials: true,
-      });
+      const res = await axios.get('http://localhost:5001/api/users/validateToken', axiosConfig);
       setUser(res.data.user);
       setAuth(true);
     } catch (err) {
@@ -26,9 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      await axios.post('https://ai-powered-job-match.onrender.com/api/users/logout', {}, {
-        withCredentials: true,
-      });
+      await axios.post('http://localhost:5001/api/users/logout', {}, axiosConfig);
       setAuth(false);
       setUser(null);
     } catch (err) {
