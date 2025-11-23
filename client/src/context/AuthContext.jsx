@@ -9,18 +9,19 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // common axios config for requests that require cookies
-  const axiosConfig = {
+  // create an axios instance that uses deployed backend when set
+  const api = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001',
     withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-  };
+  });
 
   const validateToken = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/users/validateToken', axiosConfig);
+      const res = await api.get('/api/users/validateToken');
       setUser(res.data.user);
       setAuth(true);
     } catch (err) {
@@ -33,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      await axios.post('http://localhost:5001/api/users/logout', {}, axiosConfig);
+      await api.post('/api/users/logout', {});
       setAuth(false);
       setUser(null);
     } catch (err) {
