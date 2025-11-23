@@ -18,16 +18,20 @@ dotenv.config(); // Load .env variables
 const app = express();
 
 // CORS config
-// const corsOptions = {
-//   origin: process.env.FRONTEND_URL,
-//   credentials: true,
-// };
+const rawFrontend = process.env.FRONTEND_URL || 'http://localhost:5173';
+let allowedOrigin;
+try {
+  allowedOrigin = new URL(rawFrontend).origin; // normalizes and strips path/trailing slash
+} catch {
+  allowedOrigin = rawFrontend.replace(/\/$/, ''); // fallback: remove trailing slash
+}
+
 app.use(cors({
-   origin: [   'http://localhost:5173/'   ],
-   credentials: true,
-   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-   allowedHeaders: ['Content-Type', 'Authorization'],
-   }));
+  origin: allowedOrigin,
+  credentials: true,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
+}));
 
 // Built-in middleware
 app.use(express.json());
@@ -39,7 +43,7 @@ app.use(morgan('common'));
 connectDB();
 
 app.use((req, res, next) => {
-  console.log("Request Form:", req.header.origin);
+  console.log("Request From:", req.headers.origin);
   next();
 }
   )

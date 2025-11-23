@@ -39,20 +39,22 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
+    e.preventDefault();
+    setError('');
 
-  try {
-    await axios.post('http://localhost:5001/api/users/register', formData, {
-      withCredentials: true, } , { headers: { 'Content-Type': 'application/json' }
-    });
+    try {
+      const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+      await axios.post(`${backend}/api/users/register`, formData, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-    alert('✅ Registration successful! Please login.');
-    navigate('/login');
-  } catch (err) {
-    setError(err.response?.data?.message || 'Registration failed');
-  }
-};
+      alert('✅ Registration successful! Please login.');
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed');
+    }
+  };
 
 
   return (
