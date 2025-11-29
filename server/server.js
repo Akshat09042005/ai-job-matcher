@@ -25,7 +25,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL
 ].filter(Boolean).map(url => url.replace(/\/$/, '')); // Remove trailing slashes
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -37,7 +37,10 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests for all routes
 
 // Built-in middleware
 app.use(express.json());

@@ -17,8 +17,9 @@ export default function Login() {
     setError('');
 
     try {
+      const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
       const res = await axios.post(
-        'http://localhost:5000/api/users/login',
+        `${backend}/api/users/login`,
         { email, password },
         { withCredentials: true }
       );

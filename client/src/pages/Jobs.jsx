@@ -14,7 +14,8 @@ export default function Jobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/jobs');
+        const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        const res = await axios.get(`${backend}/api/jobs`);
         setJobs(res.data);
       } catch (err) {
         setError('❌ Failed to fetch jobs.');
@@ -29,8 +30,9 @@ export default function Jobs() {
   const handleMatchClick = async () => {
     setRecommending(true);
     try {
+      const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
       const res = await axios.post(
-        'http://localhost:5000/api/jobs/recommend',
+        `${backend}/api/jobs/recommend`,
         {
           name: user.username,
           experience: user.experience,
