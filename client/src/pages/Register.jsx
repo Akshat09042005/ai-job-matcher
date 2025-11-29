@@ -44,7 +44,15 @@ export default function Register() {
 
     try {
       const backend = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
-      await axios.post(`${backend}/api/users/register`, formData, {
+
+      const payload = { ...formData };
+      if (payload.experience) {
+        payload.experience = Number(payload.experience);
+      } else {
+        delete payload.experience;
+      }
+
+      await axios.post(`${backend}/api/users/register`, payload, {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' }
       });

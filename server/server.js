@@ -18,19 +18,25 @@ dotenv.config(); // Load .env variables
 const app = express();
 
 // CORS config
-const rawFrontend = process.env.FRONTEND_URL || 'http://localhost:5173';
-let allowedOrigin;
-try {
-  allowedOrigin = new URL(rawFrontend).origin; // normalizes and strips path/trailing slash
-} catch {
-  allowedOrigin = rawFrontend.replace(/\/$/, ''); // fallback: remove trailing slash
-}
+// CORS config
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://ai-job-matcher-psi.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean).map(url => url.replace(/\/$/, '')); // Remove trailing slashes
 
 app.use(cors({
-  origin: allowedOrigin,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Built-in middleware
@@ -46,8 +52,8 @@ app.use((req, res, next) => {
   console.log("Request From:", req.headers.origin);
   next();
 }
-  )
-  
+)
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/jobs', jobRoutes);
